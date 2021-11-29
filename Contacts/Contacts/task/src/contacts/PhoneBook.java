@@ -5,17 +5,33 @@ import java.util.List;
 
 public class PhoneBook {
 
-    List<Record> records;
+    private List<Record> records;
 
     public PhoneBook() {
         records = new ArrayList<>();
     }
 
-    public void addRecord(Record record) {
-        records.add(record);
+    public boolean addRecord(Record record) {
+        return records.add(record);
+    }
+
+    public boolean removeRecord(Record record){
+        return records.remove(record);
+    }
+
+    public Record removeRecord(int index){
+        return records.remove(index);
+    }
+
+    public int getNumberOfRecords(){
+        return records.size();
     }
 
     public List<Record> getAllRecords() {
         return records;
+    }
+
+    public Record getRecordByIndex(int index){
+        return records.get(index);
     }
 }
