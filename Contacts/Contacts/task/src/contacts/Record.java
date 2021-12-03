@@ -1,18 +1,23 @@
 package contacts;
 
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Record {
+public abstract class Record {
 
-    private String name;
-    private String surname;
+
     private String number ="";
+    private final LocalDateTime creationDateTime;
+    private LocalDateTime editDateTime;
 
-    public Record(String name, String surname, String number) {
-        this.name = name;
-        this.surname = surname;
+    public Record(){
+        creationDateTime = LocalDateTime.now();
+    }
+
+    public Record(String number) {
+        creationDateTime = LocalDateTime.now();
         setNumber(number);
     }
 
@@ -31,22 +36,6 @@ public class Record {
         return !"".equals(number) && number != null;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getNumber() {
         return hasNumber() ? number : "[no number]";
     }
@@ -61,24 +50,17 @@ public class Record {
         }
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Record record = (Record) o;
-        return Objects.equals(name, record.name) &&
-                Objects.equals(surname, record.surname) &&
-                Objects.equals(number, record.number);
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, number);
+    public LocalDateTime getEditDateTime() {
+        return editDateTime;
     }
 
-    @Override
-    public String toString() {
-        return name + " " + surname + ", " + getNumber();
+    public void setEditDateTime(LocalDateTime editDateTime) {
+        this.editDateTime = editDateTime;
     }
+
+
 }

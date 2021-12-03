@@ -1,5 +1,6 @@
 package contacts;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,10 @@ public class PhoneBook {
 
     public PhoneBook() {
         records = new ArrayList<>();
+//        records.add(new PersonRecord("Bilbo", "Baggings",
+//                "123-456-789", LocalDate.now(), Gender.M));
+//        records.add(new OrganizationRecord("Mordor", "Mount Doom Plaza",
+//                "666"));
     }
 
     public boolean addRecord(Record record) {
