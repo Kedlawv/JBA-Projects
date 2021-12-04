@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -55,9 +56,25 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println(findGreatestInFile("./Contacts/task/src/ReadFile/dataset_91007.txt"));
+
 
     }
         public static String readFileAsString(String fileName) throws IOException {
             return new String(Files.readAllBytes(Paths.get(fileName)));
+    }
+
+    public static int findGreatestInFile(String path){
+        int greatest = 0;
+        try{
+            String string = new String(Files.readAllBytes(Paths.get(path)));
+            greatest = Arrays.stream(string.split(" "))
+                    .map(Integer::parseInt)
+                    .max(Integer::compareTo)
+                    .orElse(Integer.MIN_VALUE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return greatest;
     }
 }
