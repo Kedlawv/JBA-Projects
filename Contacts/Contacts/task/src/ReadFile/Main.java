@@ -15,12 +15,12 @@ public class Main {
     static File file = new File("./Contacts/task/src/ReadFile/dataset_91033.txt");
 
     public static void main(String[] args) {
-        try(Scanner scanner = new Scanner(file)){
-            while(scanner.hasNext()){
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNext()) {
                 System.out.println(scanner.next());
             }
 
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
 
@@ -38,15 +38,18 @@ public class Main {
 
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        try(Stream<String> stream= Files.lines(Path.of(file.toURI()))){
-            stream.forEach(s -> {Integer i = Integer.parseInt(s);System.out.print("" + i + i.getClass());});
+        try (Stream<String> stream = Files.lines(Path.of(file.toURI()))) {
+            stream.forEach(s -> {
+                Integer i = Integer.parseInt(s);
+                System.out.print("" + i + i.getClass());
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         System.out.println("\n******************************************************");
 
-        try(Stream<String> stream= Files.lines(Path.of(file.toURI()))){
+        try (Stream<String> stream = Files.lines(Path.of(file.toURI()))) {
             Integer result = stream
                     .map(Integer::parseInt)
                     .reduce(0, Integer::sum);
@@ -57,16 +60,18 @@ public class Main {
         }
 
         System.out.println(findGreatestInFile("./Contacts/task/src/ReadFile/dataset_91007.txt"));
-
+        System.out.println(findGreaterOrEqualTo(9999
+                ,"./Contacts/task/src/ReadFile/dataset_91022.txt"));
 
     }
-        public static String readFileAsString(String fileName) throws IOException {
-            return new String(Files.readAllBytes(Paths.get(fileName)));
+
+    public static String readFileAsString(String fileName) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
-    public static int findGreatestInFile(String path){
+    public static int findGreatestInFile(String path) {
         int greatest = 0;
-        try{
+        try {
             String string = new String(Files.readAllBytes(Paths.get(path)));
             greatest = Arrays.stream(string.split(" "))
                     .map(Integer::parseInt)
@@ -77,4 +82,19 @@ public class Main {
         }
         return greatest;
     }
+
+    public static long findGreaterOrEqualTo(int num, String path) {
+        long count = 0;
+        try {
+            String[] strArr = new String(Files.readAllBytes(Paths.get(path))).split(" ");
+            count = Arrays.stream(strArr)
+                    .map(Integer::parseInt)
+                    .filter(i -> i >= num).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
 }
