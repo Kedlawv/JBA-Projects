@@ -15,9 +15,9 @@ public class Main {
 
         String msg = MessageMaker.makeMessage(args);
 
-        try(Socket socket = new Socket(InetAddress.getLocalHost(), PORT);
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-            DataInputStream dis = new DataInputStream(socket.getInputStream())) {
+        try (Socket socket = new Socket(InetAddress.getLocalHost(), PORT);
+             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             DataInputStream dis = new DataInputStream(socket.getInputStream())) {
 
             dos.writeUTF(msg);
             System.out.println("Sent: " + msg);

@@ -1,42 +1,20 @@
 package client;
 
 import com.beust.jcommander.JCommander;
+import com.google.gson.Gson;
 
 public class MessageMaker {
 
-    public static String makeMessage(String[] args){
-        ArgsDef jArgs = new ArgsDef();
+    public static String makeMessage(String[] args) {
+        RequestArgs jRequestArgs = new RequestArgs();
         JCommander
                 .newBuilder()
-                .addObject(jArgs)
+                .addObject(jRequestArgs)
                 .build()
                 .parse(args);
 
-        String request = jArgs.getRequest();
+        Gson gson = new Gson();
 
-        StringBuilder sb = new StringBuilder();
-
-        switch(request){
-            case "get":
-
-            case "delete":
-                sb.append(request)
-                        .append(" ")
-                        .append(jArgs.getIndex());
-                break;
-            case "set":
-                sb.append(request)
-                        .append(" ")
-                        .append(jArgs.getIndex())
-                        .append(" ")
-                        .append(jArgs.getMessage());
-                break;
-            case "exit":
-                sb.append(request);
-                break;
-            default:
-                break;
-        }
-        return sb.toString();
+        return gson.toJson(jRequestArgs);
     }
 }

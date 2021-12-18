@@ -7,34 +7,20 @@ public class RepositoryImpl implements Repository {
     private final DB db = DB.getInstance();
 
     @Override
-    public boolean set(int index, String value) {
-        if (!isValidIndex(index)) {
-            return false;
-        }
-
-        db.records[index] = value;
+    public boolean set(String key, String value) {
+        db.records.put(key, value);
         return true;
     }
 
     @Override
-    public String get(int index) {
-        if (!isValidIndex(index)) {
-            return null;
-        }
-
-        return db.records[index].isEmpty() ? null : db.records[index];
+    public String get(String key) {
+        return db.records.get(key);
     }
 
     @Override
-    public boolean delete(int index) {
-        if (!isValidIndex(index)) {
-            return false;
-        }
-        db.records[index] = "";
-        return true;
+    public String delete(String key) {
+        return db.records.remove(key);
+
     }
 
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index <= 99;
-    }
 }

@@ -1,14 +1,15 @@
 package server;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DB {
 
     private static DB instance;
-    public final String[] records = new String[100];
+    public final Map<String, String> records = new HashMap<>();
 
     private DB() {
-        init();
     }
 
     public static DB getInstance() {
@@ -16,9 +17,5 @@ public class DB {
             instance = new DB();
         }
         return instance;
-    }
-
-    private void init() {
-        Arrays.fill(records, "");
     }
 }
