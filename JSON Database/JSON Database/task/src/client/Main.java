@@ -12,20 +12,18 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Client started!");
+        for (String msg : MessageMaker.getMessages(args)) {
+            try (Socket socket = new Socket(InetAddress.getLocalHost(), PORT);
+                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                 DataInputStream dis = new DataInputStream(socket.getInputStream())) {
 
-        String msg = MessageMaker.makeMessage(args);
-
-        try (Socket socket = new Socket(InetAddress.getLocalHost(), PORT);
-             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-             DataInputStream dis = new DataInputStream(socket.getInputStream())) {
-
-            dos.writeUTF(msg);
-            System.out.println("Sent: " + msg);
-            String msgIn = dis.readUTF();
-            System.out.println("Received: " + msgIn);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+                dos.writeUTF(msg);
+                System.out.println("Sent: " + msg);
+                String msgIn = dis.readUTF();
+                System.out.println("Received: " + msgIn);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

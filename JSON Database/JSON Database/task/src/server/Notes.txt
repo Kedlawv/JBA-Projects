@@ -11,7 +11,17 @@ Implement the ability to read a request from a file.
      + => if arg filePath (-in) is not null then read file @ path and send as request
 
 Create a multithreaded server =>
-    - => let main thread handle incoming requests and dispatch service of those requests to separate
+    + => let main thread handle incoming requests and dispatch service of those requests to separate
              threads using ExecutorService
+             Problem => Client getting EOF exception or “host closed connection” message
+
+             Server was creating new sockets for connections and passing them to new Thread that would service the request.
+             Client was trying to use same Output/Input streams for communication but Server Thread was closing the streams inside a try/catch.
+
+             Solution => Client needed to create new sockets and new streams for every single request.
+             So instead of having for loop inside try/catch trying to read/write to same streams we needed to put the loop outside the try catch
+             to create new socket and new streams for every request.
+
+
     - => use ReentrantReadWrite for parallel reads and exclusive writes
     - => figure out where to lock -> Repo ? DB ?

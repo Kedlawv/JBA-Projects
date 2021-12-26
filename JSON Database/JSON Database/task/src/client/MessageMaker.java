@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageMaker {
 
-    public static String makeMessage(String[] args) {
+    public static List<String> getMessages(String[] args) {
         RequestArgs jRequestArgs = new RequestArgs();
         Gson gson = new Gson();
-        String requestMessage;
+        List<String> requestMessages = new ArrayList<>();
 
         JCommander
                 .newBuilder()
@@ -23,18 +25,20 @@ public class MessageMaker {
                 .parse(args);
 
         if (jRequestArgs.getFileName() != null) {
-            requestMessage = getRequestFromFile(jRequestArgs.getFileName());
+            requestMessages = getRequestsFromFile(jRequestArgs.getFileName());
         } else {
-            requestMessage = gson.toJson(jRequestArgs);
+            requestMessages.add(gson.toJson(jRequestArgs));
         }
-        return requestMessage;
+        return requestMessages;
     }
 
-    private static String getRequestFromFile(String fileName) {
+    private static List<String> getRequestsFromFile(String fileName) {
         Path path = Path.of("JSON Database\\task\\src\\client\\data\\" + fileName);
+        List<String> requestMessages = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(path,
                 StandardCharsets.UTF_8)) {
-            return reader.readLine();
+            reader.lines().forEach(requestMessages::add);
+            return requestMessages;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

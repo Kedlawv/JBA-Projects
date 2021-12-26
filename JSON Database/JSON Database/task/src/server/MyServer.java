@@ -1,38 +1,34 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MyServer {
 
     private final int port;
+    ExecutorService es;
 
     public MyServer(int port) {
         this.port = port;
+        es = Executors.newFixedThreadPool(4);
     }
 
     public void start() {
         System.out.println("Server started!");
 
-        while (true) {
-            try (ServerSocket server = new ServerSocket(port);
-                 Socket socket = server.accept();
-                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                 DataInputStream dis = new DataInputStream(socket.getInputStream())) {
+        try (ServerSocket server = new ServerSocket(port)) {
+            server.setReuseAddress(true);
+            while (true) {
 
-                String msgIn = dis.readUTF();
-                RequestHandler rh = new RequestHandler();
-                String msgOut = rh.handleRequest(msgIn);
+                Socket socket = server.accept();
+                es.submit(new ServerThreadWorker(socket));
 
-                dos.writeUTF(msgOut);
-                System.out.println("Sent: " + msgOut);
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
