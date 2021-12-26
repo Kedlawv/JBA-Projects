@@ -1,0 +1,17 @@
+DB to file => instead of direct access to the Map
+    + => make map private
+    + => create public getter
+    + => getter will read file, Gson-it and return Map
+    + => for set and delete create a method persist() or set, that will GSON the Map back to string
+            and save it to file
+Implement the ability to read a request from a file.
+     If the -in argument followed by the file name was provided, you should read a request
+     from that file. The file will be stored in /client/data.
+
+     + => if arg filePath (-in) is not null then read file @ path and send as request
+
+Create a multithreaded server =>
+    - => let main thread handle incoming requests and dispatch service of those requests to separate
+             threads using ExecutorService
+    - => use ReentrantReadWrite for parallel reads and exclusive writes
+    - => figure out where to lock -> Repo ? DB ?

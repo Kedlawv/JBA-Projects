@@ -12,6 +12,9 @@ public class RequestArgs {
     @Parameter(names = "-v", description = "value")
     private String value;
 
+    @Parameter(names = "-in", description = "file name")
+    private String fileName;
+
     public String getType() {
         return type;
     }
@@ -22,5 +25,9 @@ public class RequestArgs {
 
     public String getValue() {
         return value;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

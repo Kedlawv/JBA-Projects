@@ -1,6 +1,8 @@
 package server.Repository;
 
-import server.DB;
+import server.data.DB;
+
+import java.util.Map;
 
 public class RepositoryImpl implements Repository {
 
@@ -8,18 +10,23 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public boolean set(String key, String value) {
-        db.records.put(key, value);
-        return true;
+        Map<String, String> records = db.getRecords();
+        records.put(key, value);
+        return db.setRecords(records);
     }
 
     @Override
     public String get(String key) {
-        return db.records.get(key);
+        return db.getRecords().get(key);
     }
 
     @Override
     public String delete(String key) {
-        return db.records.remove(key);
+        Map<String, String> records = db.getRecords();
+        String deletedItem = records.remove(key);
+        db.setRecords(records);
+        return deletedItem;
+
 
     }
 
