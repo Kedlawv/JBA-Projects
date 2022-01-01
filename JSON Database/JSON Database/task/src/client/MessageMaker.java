@@ -33,7 +33,8 @@ public class MessageMaker {
     }
 
     private static List<String> getRequestsFromFile(String fileName) {
-        Path path = Path.of("JSON Database\\task\\src\\client\\data\\" + fileName);
+//        Path path = Path.of("JSON Database\\task\\src\\client\\data\\" + fileName);
+        Path path = Path.of(System.getProperty("user.dir") + "/src/client/data/" + fileName);
         List<String> requestMessages = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(path,
                 StandardCharsets.UTF_8)) {

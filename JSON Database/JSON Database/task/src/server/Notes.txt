@@ -23,5 +23,7 @@ Create a multithreaded server =>
              to create new socket and new streams for every request.
 
 
-    - => use ReentrantReadWrite for parallel reads and exclusive writes
-    - => figure out where to lock -> Repo ? DB ?
+    + => make DB singleton thread safe
+            for now simple synchronized getInstance will do. Performance is not an issue.
+    + => use ReentrantReadWrite for parallel reads and exclusive writes
+    + => figure out where to lock -> Repo ? DB ? => Locked on Repo

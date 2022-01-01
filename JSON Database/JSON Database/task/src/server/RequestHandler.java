@@ -9,7 +9,7 @@ public class RequestHandler {
 
     Repository repo = new RepositoryImpl();
 
-    public String handleRequest(String msgIn) {
+    public String handleRequest(String msgIn, MyServer server) {
         Gson gson = new Gson();
         RequestArgs requestArgs = gson.fromJson(msgIn, RequestArgs.class);
         ResponseArgs responseArgs = new ResponseArgs();
@@ -45,7 +45,8 @@ public class RequestHandler {
                 }
                 break;
             case "exit":
-                System.exit(130);
+                responseArgs.setResponse("OK");
+                server.stop();
                 break;
             default:
                 System.out.println("Command does not exist => " + command);

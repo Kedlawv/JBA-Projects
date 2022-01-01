@@ -6,5 +6,6 @@ public class Main {
 
         MyServer server = new MyServer(7070);
         server.start();
+        System.out.println("Main end!");
     }
 }

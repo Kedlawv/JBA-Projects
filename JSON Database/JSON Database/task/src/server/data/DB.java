@@ -14,14 +14,16 @@ public class DB {
     private static DB instance;
     public final Map<String, String> records = new HashMap<>();
     private File file;
-    private final String path = "JSON Database\\task\\src\\server\\data\\db.json";
+//    private final String path = "JSON Database\\task\\src\\server\\data\\db.json";
+    private final String path = System.getProperty("user.dir") + "/src/server/data/db.json";
     Gson gson = new Gson();
 
     private DB() {
-        initFile();
+//        initFile();
+        file = new File(path);
     }
 
-    public static DB getInstance() {
+    public static synchronized DB getInstance() {
         if (instance == null) {
             instance = new DB();
         }
@@ -29,9 +31,9 @@ public class DB {
     }
 
     public Map<String, String> getRecords() {
-        if (isFileEmpty()) {
-            return new HashMap<String, String>();
-        }
+//        if (isFileEmpty()) {
+//            return new HashMap<String, String>();
+//        }
         try (Reader reader = Files.newBufferedReader(file.toPath(),
                 StandardCharsets.UTF_8)) {
             return gson.fromJson(reader, new TypeToken<Map<String, String>>() {
@@ -60,6 +62,7 @@ public class DB {
             file = new File(path);
             file.createNewFile();
         } catch (IOException e) {
+            System.out.println(path);
             e.printStackTrace();
         }
     }
