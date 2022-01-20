@@ -27,3 +27,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+/Contacts/.gradle/
+/Contacts/build.gradle
+/Contacts/course-info.yaml
+/Contacts/course-remote-info.yaml
+/Contacts/gradlew
+/Contacts/gradlew.bat
+/Contacts/settings.gradle
+/Contacts/gradle/
